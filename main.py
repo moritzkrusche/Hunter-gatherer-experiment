@@ -66,7 +66,7 @@ ui.setupUi(window)
 
 # If set to True, it reveals a "Skip" or an "EAT ME" button on every page or level, that allows for skipping
 #  through the programme..
-testing_programme = True
+testing_programme = False
 # These settings govern by how much paramaters are modified in a multimodal distribution (-mean, + sd)
 mod_mean = 5
 mod_sd = 15
@@ -117,7 +117,8 @@ def get_group():
     return next_group
 
 group = get_group()
-print("GROUP:", group)
+if testing_programme:
+    print("GROUP:", group)
 
 # These settings determine by how much a resource patch is going to be depreciated every time it is used. This will
 # vary between groups. Modifier of mean expected payoff compensate for this, by generically multiplying or adding
@@ -721,10 +722,12 @@ timer_bad.timeout.connect(animation_bad)
 # For every time a patch is exploited, its payoff is reduced by a set value. This value depends on the condition
 def depreciate(patch_no, current_payoff):
 
-    print("PATCH", patch_no)
+    if testing_programme:
+        print("PATCH", patch_no)
     exploited_count = patches_trackers[current_lvl][patch_no]
 
-    print("exploited ", exploited_count, "before, payoff reduced by ", int(round(exploited_count * depreciator, 0)))
+    if testing_programme:
+        print("exploited ", exploited_count, "before, payoff reduced by ", int(round(exploited_count * depreciator, 0)))
     return int(round((current_payoff - exploited_count * depreciator), 0))
 
 # updates score, but only if level count is 1-3
